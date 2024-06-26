@@ -10,6 +10,7 @@ The Analog Calculator System allows users to input complex mathematical expressi
 - **Parentheses for Grouping**: Support for complex expressions with grouping using parentheses.
 - **Wireless Input**: Inputs can be given wirelessly over Wi-Fi connection by phone or laptops handled by NodeMCU unit.
 - **Arduino Integration**: Input expressions are parsed and converted for Arduino using the Arduino Stack Library.
+- **Inputs via PWM**: PWM square wave is averaged to its DC value by a RC low-pass filter and given to the analog circuit.
 - **Display Output**: Calculated results are displayed on the user's personal computer screen.
 
 ## How It Works
@@ -19,14 +20,3 @@ The Analog Calculator System allows users to input complex mathematical expressi
 3. **Arduino Interface**: Arduino translates the parsed expression for analog circuitry.
 4. **Analog Circuitry**: Analog circuitry performs basic arithmetic operations.
 5. **Result Display**: The computed result is sent back to the personal computer screen for display.
-
-## Benefits
-
-- **Efficiency**: Analog circuitry can be faster and more power-efficient than traditional digital calculators for certain operations.
-- **Cost-Effective**: Utilizes Arduino and analog components, making it cost-effective compared to digital alternatives.
-- **Educational Tool**: Enhances learning in electronics, programming, and mathematics through hands-on analog computing demonstrations.
-- **Energy Savings**: Potential for reduced power consumption in applications sensitive to energy usage.
-
-## Application
-
-This system represents an innovative approach to computing, leveraging modern programming techniques with analog electronics to create a versatile calculator suitable for various educational and practical applications.
