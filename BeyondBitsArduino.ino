@@ -271,3 +271,11 @@ void loop() {
   delay(100); // Add a delay to avoid reading too quickly
   
 }
+
+// I2C
+
+// multi-master, multi-slave, serial bus
+// connect multiple integrated circuits (ICs) or microcontrollers 
+// SDA (Serial Data Line): Used for data transmission.
+// SCL (Serial Clock Line): Used to synchronize the data transmission.
+// Arduino is the slave with address 9
