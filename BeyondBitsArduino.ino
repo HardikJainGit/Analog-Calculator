@@ -1,16 +1,16 @@
 #include <SoftwareSerial.h>
 #include <Arduino.h>
 #include <StackArray.h> // Include Arduino Stack library for stack implementation
-#include <Wire.h>
+#include <Wire.h> // I2C is a two-wire serial communication protocol 
 
 const int bufferSize = 40; // Adjust the size based on your requirements
 char tempBuffer[bufferSize]; // Temporary non-volatile buffer
 volatile char buffer[bufferSize];
 volatile boolean receiveFlag = false;
 
-void receiveEvent(int howMany) {
+void receiveEvent(int howMany) { // data received from I2C
   if (howMany <= bufferSize) {
-    Wire.readBytes(tempBuffer, howMany);
+    Wire.readBytes(tempBuffer, howMany); // read and NULL terminate
     tempBuffer[howMany] = '\0'; // Null-terminate the temporary buffer
     
     // Copy the data into the volatile buffer
@@ -19,11 +19,12 @@ void receiveEvent(int howMany) {
     }
     
     receiveFlag = true;
-  } else {
-    // Handle the case where the received data exceeds the buffer size
-    // This could be an error condition or a mechanism to handle larger data
-    // You may need to implement your specific logic here
-  }
+  } 
+  // else {
+  //   // Handle the case where the received data exceeds the buffer size
+  //   // This could be an error condition or a mechanism to handle larger data
+  //   // You may need to implement your specific logic here
+  // }
 }
 
 
@@ -62,7 +63,7 @@ float applyOp(float a, float b, char op) {
 
   if(op=='*')
   {
-    analogWrite(5,51);
+    analogWrite(5,51); // 14 digital and 6 analog pins
   }
     
   // Write PWM values to the corresponding pins
@@ -80,6 +81,7 @@ float applyOp(float a, float b, char op) {
     delay(30); 
     // Read and accumulate analog value from the appropriate pin based on operation
     switch (op) {
+      // Perform DAC from 10-bit digital to analog
       case '+': 
         sumAnalogValue += ((float)analogRead(A0))*5/1023; // Read analog value from pin A0
         break;
@@ -230,20 +232,23 @@ float evaluate(String tokens){
 }
 
 void setup() {
-  Serial.begin(9600); // Initialize the hardware serial
+  Serial.begin(9600); // Initialize the hardware serial 9600 baud
+
+  // The address 9 is an arbitrary 7-bit value 
+  // (from 0 to 127) that identifies this Arduino on the Inter-Integrated Circuit bus.
   Wire.begin(9); // Address for the Arduino Uno
   Wire.onReceive(receiveEvent); // Register the receive event
 
-  pinMode(6, OUTPUT); // PWM pin for motor 1
-  pinMode(9, OUTPUT); // PWM pin for motor 2
+  pinMode(6, OUTPUT); // PWM pin for input 1
+  pinMode(9, OUTPUT); // PWM pin for input 2
+
+  // inputs to the arduino from the circuits
 
   pinMode(A0, INPUT);
   pinMode(A1, INPUT);
   pinMode(A2, INPUT);
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
-  
-
 }
 
 void loop() {
@@ -263,6 +268,6 @@ void loop() {
     receiveFlag = false;
   }
 
-    delay(100); // Add a delay to avoid reading too quickly
+  delay(100); // Add a delay to avoid reading too quickly
   
 }
